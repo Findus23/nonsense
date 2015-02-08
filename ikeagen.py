@@ -2,7 +2,7 @@
 import random
 import sys
 
-table= [ [ 0 for i in range(2210) ] for j in range(2210) ]
+table= [ [ 0 for i in range(221) ] for j in range(221) ]
 contents = open("ikeaname.txt").read().splitlines()
 anzahl=0
 for name in contents:

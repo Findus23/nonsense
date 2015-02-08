@@ -4,7 +4,7 @@ rm descr.txt
 
 for i in {0..25}
 do
-	wget -O download.tmp http://www.ikea.com/at/de/catalog/productsaz/$i/
+	wget -O download.tmp http://www.ikea.com/gb/en/catalog/productsaz/$i/
 	grep "productsAzLink" download.tmp > lines.tmp
 	while read line; do
 		name=$(echo $line | xmllint --xpath 'string(//a)' -)
