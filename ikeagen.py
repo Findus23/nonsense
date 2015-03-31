@@ -2,7 +2,7 @@
 import random
 import sys
 
-table= [ [ 0 for i in range(221) ] for j in range(221) ]
+table= [ [ [ 0 for i in range(221) ] for j in range(221) ] for j in range(221) ]
 contents = open("ikeaname.txt").read().splitlines()
 anzahl=0
 for name in contents:
@@ -12,7 +12,7 @@ for name in contents:
 	zeichenl += -1
 	a=0
 	while a < zeichenl:
-		table[ord(zeichen[a])][ord(zeichen[a+1])] +=1
+		table[ord(zeichen[a-1])][ord(zeichen[a])][ord(zeichen[a+1])] +=1
 		anzahl +=1
 		a +=1
 #row=0
@@ -22,10 +22,10 @@ for name in contents:
 #		if table[coln][rown] != 0:
 #			print(table[coln][rown],chr(rown),chr(coln))
 #print(anzahl)
-def letter(a):
+def letter(p,a):
 	mylist=[]
 	for b in range(221):
-		for x in range(table[a][b]):
+		for x in range(table[p][a][b]):
 			mylist.append(b)
 
 	return random.choice(mylist)
@@ -36,9 +36,12 @@ except:
 textnr=0
 while textnr < num:
 	a=32
+	p=32
 	wort=[]
 	while a != 32 or wort == []:
-		a=letter(a)
+		new=letter(p,a)
+		p=a
+		a=new
 		wort.append(chr(a))
 	if len(wort) > 3:
 		print("".join(wort))
