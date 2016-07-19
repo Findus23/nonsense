@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import json
 import re
 
@@ -10,8 +11,7 @@ digit = set()
 prefix = set()
 suffix = set()
 for d in (data["descriptions"]):
-    print(d)
-    nouns.update(re.findall("([A-ZÖÄÜ][^A-Z\s\dÖÄÜ\-/,\"]+)", d))
+    nouns.update(re.findall("([A-ZÖÄÜ][^A-Z\s\dÖÄÜ\-/,+()\"]+)", d))
     adj.update(re.findall(" ([^A-ZÖÄÜ\d]{3,}[^A-ZÖÄÜ\s\d])", d))
     digit.update(re.findall(" ([\d]+[\w.-]{3,}[\w./]+)", d))
     prefix.update(re.findall("([\w.-]+-)", d))
