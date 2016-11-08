@@ -5,3 +5,4 @@ tmp
 *.txt
 .idea/
 *.json
+__pycache__/
