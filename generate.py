@@ -2,7 +2,7 @@
 import json
 import random
 
-with open('data.json') as data_file:
+with open('words.json') as data_file:
     data = json.load(data_file)
 
 

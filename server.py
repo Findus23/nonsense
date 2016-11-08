@@ -8,7 +8,7 @@ import generate
 @app.route('/api/description/<int:count>/')
 def get_description(count):
     descriptions = []
-    if (count > 1000):
+    if count > 1000:
         abort(422)
     for _ in range(count):
         descriptions.append(generate.get_description())
