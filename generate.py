@@ -16,7 +16,7 @@ def get_noun():
 
 
 def get_description():
-    noun = get_noun()
+    description = get_noun()
     mit = False
     num_extras = round(abs(random.normalvariate(2.0, 2.0)))
     for i in range(0, num_extras):
@@ -35,5 +35,10 @@ def get_description():
         else:
             extra = random.choice(data["adj"])
             mit = False
-        noun += " " + extra
-    return noun
+        description += " " + extra
+    return description
+
+
+if __name__ == "__main__":
+    for _ in range(10):
+        print(get_description())
