@@ -1,8 +1,5 @@
-*.pdf
-*.bak
 *.tmp
 tmp
-*.txt
 .idea/
 *.json
 __pycache__/
