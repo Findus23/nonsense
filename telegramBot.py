@@ -3,11 +3,21 @@
 #
 # Simple Bot to reply to Telegram messages
 # This program is dedicated to the public domain under the CC0 license.
+import re
+from uuid import uuid4
+
+from telegram import InlineQueryResultArticle
+from telegram import InputTextMessageContent
+from telegram import ParseMode
+from telegram.ext import InlineQueryHandler
+from telegram.ext import Job
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 
 import config
 import generate
+
+subscriptions = dict()
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -23,8 +33,37 @@ def help(bot, update):
     update.message.reply_text("Hier steht der Hilfetext!")
 
 
-def echo(bot, update):
-    update.message.reply_text(update.message.text)
+def single(bot, update):
+    update.message.reply_text(generate.get_description())
+
+
+def subscribe_notification(bot, job):
+    bot.sendMessage(job.context, text=generate.get_description())
+
+
+def subscribe(bot, update, job_queue):
+    """Adds a job to the queue"""
+    chat_id = update.message.chat_id
+    # Add job to queue
+    job = Job(subscribe_notification, 10, repeat=True, context=chat_id)
+    subscriptions[chat_id] = job
+    job_queue.put(job, next_t=0.0)
+    update.message.reply_text('Successfully subscribed')
+
+
+def unsubscribe(bot, update):
+    """Deletes a job"""
+    chat_id = update.message.chat_id
+
+    if chat_id not in subscriptions:
+        update.message.reply_text('You have no subscription')
+        return
+
+    # Add job to queue
+    job = subscriptions[chat_id]
+    job.schedule_removal()
+    del subscriptions[chat_id]
+    update.message.reply_text('Successfully unsubscribed')
 
 
 def multiple(bot, update, args):
@@ -56,11 +95,14 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", help))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("single", single))
     dp.add_handler(CommandHandler("multiple", multiple, pass_args=True))
+    # dp.add_handler(CommandHandler("single", subscribe_notification))
+    dp.add_handler(CommandHandler("subscribe", subscribe, pass_job_queue=True))
+    dp.add_handler(CommandHandler("unsubscribe", unsubscribe))
 
     # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    dp.add_handler(MessageHandler(Filters.text, single))
 
     # log all errors
     dp.add_error_handler(error)
