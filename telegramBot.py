@@ -3,16 +3,14 @@
 #
 # Simple Bot to reply to Telegram messages
 # This program is dedicated to the public domain under the CC0 license.
-import re
+import logging
 from uuid import uuid4
-
+import yaml
 from telegram import InlineQueryResultArticle
 from telegram import InputTextMessageContent
-from telegram import ParseMode
 from telegram.ext import InlineQueryHandler
 from telegram.ext import Job
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import logging
 
 import config
 import generate
@@ -47,7 +45,7 @@ def subscribe(bot, update, job_queue):
     # Add job to queue
     job = Job(subscribe_notification, 10, repeat=True, context=chat_id)
     subscriptions[chat_id] = job
-    job_queue.put(job, next_t=0.0)
+    job_queue.put(job, next_t=1.0)
     update.message.reply_text('Successfully subscribed')
 
 
@@ -71,8 +69,8 @@ def multiple(bot, update, args):
         descriptions = []
         print(args)
         count = int(args[0])
-        if count > 100:
-            update.message.reply_text(str(count) + ' > 100')
+        if count > 50:
+            update.message.reply_text(str(count) + ' > 50')
             return
         for _ in range(count):
             descriptions.append("+++ " + generate.get_description() + " +++")
@@ -83,6 +81,42 @@ def multiple(bot, update, args):
 
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
+
+
+def inlinequery(bot, update):
+    if update.inline_query.query == "":
+        count = 3
+    else:
+        count = int(update.inline_query.query)
+    results = list()
+    if count > 50:
+        count = 50
+    for i in range(count):
+        description = generate.get_description()
+        results.append(InlineQueryResultArticle(id=uuid4(),
+                                                title=description,
+                                                input_message_content=InputTextMessageContent(description)))
+    update.inline_query.answer(results)
+
+
+def startup(job_queue):
+    with open("save.yaml") as json_file:
+        save = yaml.load(json_file)
+    for s in save["subscriptions"]:
+        job = Job(subscribe_notification, 10, repeat=True, context=s)
+        subscriptions[s] = job
+        job_queue.put(job, next_t=1.0)
+
+
+def shutdown():
+    print("------------------------------------------------------------------------")  #
+    save = {
+        "subscriptions": []
+    }
+    for s in subscriptions:
+        save["subscriptions"].append(s)
+    with open("save.yaml", 'w') as stream:
+        yaml.dump(save, stream, default_flow_style=False)
 
 
 def main():
@@ -104,16 +138,22 @@ def main():
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, single))
 
+    dp.add_handler(InlineQueryHandler(inlinequery))
+
     # log all errors
     dp.add_error_handler(error)
 
     # Start the Bot
     updater.start_polling()
 
+    startup(updater.job_queue)
+
     # Run the bot until the you presses Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
+
+    shutdown()
 
 
 if __name__ == '__main__':
