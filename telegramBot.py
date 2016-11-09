@@ -3,6 +3,7 @@
 #
 # Simple Bot to reply to Telegram messages
 # This program is dedicated to the public domain under the CC0 license.
+import datetime
 import logging
 from uuid import uuid4
 import yaml
@@ -39,13 +40,21 @@ def subscribe_notification(bot, job):
     bot.sendMessage(job.context, text=generate.get_description())
 
 
+def time_till_first_run():
+    now = datetime.datetime.now()
+    nextsend = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, 0) + datetime.timedelta(minutes=1)
+    time_till_next_send = nextsend - now
+    return time_till_next_send.total_seconds()
+
+
 def subscribe(bot, update, job_queue):
     """Adds a job to the queue"""
     chat_id = update.message.chat_id
     # Add job to queue
-    job = Job(subscribe_notification, 10, repeat=True, context=chat_id)
+    job = Job(subscribe_notification, 60, repeat=True, context=chat_id)
     subscriptions[chat_id] = job
-    job_queue.put(job, next_t=1.0)
+
+    job_queue.put(job, next_t=time_till_first_run())
     update.message.reply_text('Successfully subscribed')
 
 
@@ -103,9 +112,9 @@ def startup(job_queue):
     with open("save.yaml") as json_file:
         save = yaml.load(json_file)
     for s in save["subscriptions"]:
-        job = Job(subscribe_notification, 10, repeat=True, context=s)
+        job = Job(subscribe_notification, 60, repeat=True, context=s)
         subscriptions[s] = job
-        job_queue.put(job, next_t=1.0)
+        job_queue.put(job, next_t=time_till_first_run())
 
 
 def shutdown():
