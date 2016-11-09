@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json
+import yaml
 import re
 
 import requests
@@ -40,5 +40,5 @@ words = {
     "prefix": list(prefix),
     "suffix": list(suffix)
 }
-with open('words.json', 'w') as outfile:
-    json.dump(words, outfile, indent=4)
+with open('words.yaml', 'w') as outfile:
+    yaml.dump(words, outfile, default_flow_style=False)
