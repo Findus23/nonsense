@@ -2,7 +2,7 @@
 import yaml
 import random
 
-with open('words.json') as data_file:
+with open('words.yaml') as data_file:
     data = yaml.load(data_file)
 
 
