@@ -51,6 +51,10 @@ def subscribe(bot, update, job_queue):
     """Adds a job to the queue"""
     chat_id = update.message.chat_id
     # Add job to queue
+    if chat_id in subscriptions:
+        update.message.reply_text('You are already subscribed')
+        return
+
     job = Job(subscribe_notification, 60, repeat=True, context=chat_id)
     subscriptions[chat_id] = job
 
@@ -117,7 +121,7 @@ def startup(job_queue):
         job_queue.put(job, next_t=time_till_first_run())
 
 
-def shutdown():
+def shutdown(a=None, b=None):
     print("------------------------------------------------------------------------")  #
     save = {
         "subscriptions": []
@@ -143,6 +147,8 @@ def main():
     # dp.add_handler(CommandHandler("single", subscribe_notification))
     dp.add_handler(CommandHandler("subscribe", subscribe, pass_job_queue=True))
     dp.add_handler(CommandHandler("unsubscribe", unsubscribe))
+
+    dp.add_handler(CommandHandler("save", shutdown))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, single))
