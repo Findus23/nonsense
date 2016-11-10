@@ -151,7 +151,7 @@ def main():
     dp.add_handler(CommandHandler("save", shutdown))
 
     # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, single))
+    # dp.add_handler(MessageHandler(Filters.text, single))
 
     dp.add_handler(InlineQueryHandler(inlinequery))
 
