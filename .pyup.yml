@@ -1,2 +1,4 @@
-update: security
+update: all
+schedule: "every month"
+
 
