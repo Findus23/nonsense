@@ -9,5 +9,5 @@ MarkupSafe==1.0
 python-telegram-bot==5.3.1
 PyYAML==3.12
 requests==2.13.0
-urllib3==1.20
+urllib3==1.21
 Werkzeug==0.12.1
