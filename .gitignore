@@ -5,3 +5,4 @@ tmp
 *.yaml
 __pycache__/
 config.py
+!words.yaml
