@@ -6,3 +6,4 @@ tmp
 __pycache__/
 config.py
 !words.yaml
+!download.json
