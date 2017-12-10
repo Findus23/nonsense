@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, url_for, redirect, abort
 
-app = Flask(__name__)
-
 import generate
+import ikeagen
+
+app = Flask(__name__)
 
 
 @app.route('/api/description/<int:count>/')
@@ -11,8 +12,13 @@ def get_description(count):
     if count > 1000:
         abort(422)
     for _ in range(count):
-        descriptions.append(generate.get_description())
-    return jsonify(descriptions)
+        descriptions.append({
+            "description": generate.get_description(),
+            "name": ikeagen.generate()
+        })
+    response = jsonify(descriptions)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route("/")
