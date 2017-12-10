@@ -116,9 +116,9 @@ def startup(job_queue):
     with open("save.yaml") as json_file:
         save = yaml.load(json_file)
     for s in save["subscriptions"]:
-        job = Job(subscribe_notification, 60, repeat=True, context=s)
+        job = Job(subscribe_notification, repeat=True, context=s)
         subscriptions[s] = job
-        job_queue.put(job, next_t=time_till_first_run())
+        job_queue.run_daily(job, next_t=time_till_first_run())
 
 
 def shutdown(a=None, b=None):
