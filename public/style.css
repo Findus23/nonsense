@@ -1,0 +1,40 @@
+body, html {
+  padding: 0;
+  margin: 0;
+  background: #003399;
+  height: 100%;
+  font-family: "Verdana", "Liberation Sans", sans-serif; }
+
+#contentbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%; }
+
+#box {
+  background: #ffcc00;
+  padding: 16px; }
+
+#buttonwrapper {
+  position: fixed;
+  top: 50px;
+  text-decoration: none; }
+  #buttonwrapper:hover {
+    text-decoration: none; }
+    #buttonwrapper:hover #icon {
+      transform: rotate(90deg); }
+
+#icon {
+  width: 70px;
+  height: 70px;
+  transition: transform .3s; }
+
+#button {
+  color: white;
+  text-transform: uppercase; }
+
+#name {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 16px; }

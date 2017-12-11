@@ -3,6 +3,7 @@ tmp
 .idea/
 *.json
 *.yaml
+*.pickle
 __pycache__/
 config.py
 !words.yaml

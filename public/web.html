@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="contentbox">
+    <a href="#" id="buttonwrapper">
+        <svg viewBox="0 0 205.2 205.2" height="775.7" width="775.7" id="icon">
+            <g transform="translate(-3.2 -43.2)">
+                <circle r="88.7" cy="145.8" cx="105.8" fill="#fff"></circle>
+                <path d="M121.4 198.8c-.2-.2-5.1-.4-10.9-.5-5.7-.1-10.4-.4-10.4-.7 0-.3 9-10 20-21.8l20.1-21.4-50.8-.2-50.9-.2V134.3l51-.2 51.1-.2-16.7-17.6-20.4-21.6-3.8-3.9H124.4l24.6 26.3a687.5 687.5 0 0 1 24.6 27.1c0 .7-41.6 45-48.7 52-1.7 1.6-3.3 2.8-3.5 2.6z"></path>
+            </g>
+        </svg>
+        <span id="button">Neu Generieren</span>
+    </a>
+    <div id="box">
+        <div id="name">
+
+        </div>
+        <div id="description">
+
+        </div>
+    </div>
+</div>
+<script>
+    function fetchDescription() {
+        var descriptionDiv = document.getElementById("description");
+        var nameDiv = document.getElementById("name");
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText)[0];
+                    descriptionDiv.innerText = data.description;
+                    nameDiv.innerText = data.name;
+                }
+            }
+        };
+        xhr.open('GET', 'http://localhost:5000/api/description/1/', true);
+        xhr.send(null);
+    }
+    fetchDescription();
+    document.getElementById("buttonwrapper").addEventListener("click", fetchDescription);
+</script>
+</body>
+</html>
