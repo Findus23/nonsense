@@ -6,12 +6,12 @@
 import datetime
 import logging
 from uuid import uuid4
+
 import yaml
 from telegram import InlineQueryResultArticle
 from telegram import InputTextMessageContent
 from telegram.ext import InlineQueryHandler
-from telegram.ext import Job
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler
 
 import config
 import generate
@@ -40,13 +40,6 @@ def subscribe_notification(bot, job):
     bot.sendMessage(job.context, text=generate.get_description())
 
 
-def time_till_first_run():
-    now = datetime.datetime.now()
-    nextsend = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, 0) + datetime.timedelta(minutes=1)
-    time_till_next_send = nextsend - now
-    return time_till_next_send.total_seconds()
-
-
 def subscribe(bot, update, job_queue):
     """Adds a job to the queue"""
     chat_id = update.message.chat_id
@@ -55,10 +48,10 @@ def subscribe(bot, update, job_queue):
         update.message.reply_text('You are already subscribed')
         return
 
-    job = Job(subscribe_notification, 60, repeat=True, context=chat_id)
+    job = job_queue.run_daily(subscribe_notification,
+                              context=chat_id,
+                              time=datetime.datetime.now().replace(minute=0, hour=8, second=0))
     subscriptions[chat_id] = job
-
-    job_queue.put(job, next_t=time_till_first_run())
     update.message.reply_text('Successfully subscribed')
 
 
@@ -116,9 +109,9 @@ def startup(job_queue):
     with open("save.yaml") as json_file:
         save = yaml.load(json_file)
     for s in save["subscriptions"]:
-        job = Job(subscribe_notification, repeat=True, context=s)
+        job = job_queue.run_daily(subscribe_notification, context=s,
+                                  time=datetime.datetime.now().replace(minute=0, hour=8, second=0))
         subscriptions[s] = job
-        job_queue.run_daily(job, next_t=time_till_first_run())
 
 
 def shutdown(a=None, b=None):
@@ -126,6 +119,7 @@ def shutdown(a=None, b=None):
     save = {
         "subscriptions": []
     }
+    print(subscriptions)
     for s in subscriptions:
         save["subscriptions"].append(s)
     with open("save.yaml", 'w') as stream:
