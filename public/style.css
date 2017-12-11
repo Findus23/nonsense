@@ -19,7 +19,9 @@ body, html {
 #buttonwrapper {
   position: fixed;
   top: 50px;
-  text-decoration: none; }
+  text-decoration: none;
+  display: flex;
+  align-items: center; }
   #buttonwrapper:hover {
     text-decoration: none; }
     #buttonwrapper:hover #icon {
@@ -28,7 +30,8 @@ body, html {
 #icon {
   width: 70px;
   height: 70px;
-  transition: transform .3s; }
+  transition: transform .3s;
+  margin-right: 10px; }
 
 #button {
   color: white;
