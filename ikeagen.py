@@ -1,47 +1,49 @@
 #!/usr/bin/python3
 import json
 
-import os.path
+import pickle
+
+import os
 import random
 from PIL import Image
 
 
 def gen():
-    table = [[0 for i in range(221)] for j in range(221)]
+    table = [[[0 for i in range(221)] for j in range(221)] for k in range(221)]
     # contents = open("ikeaname.txt").read().splitlines()
     with open('download.json') as inputfile:
         contents = json.load(inputfile)["names"]
     count = 0
     for name in contents:
         if name:
-            name = " " + name + " "
+            name = "  " + name + "  "
             zeichen = list(name)
             zeichenl = len(zeichen)
-            zeichenl += -1
+            zeichenl -= 2
             a = 0
             while a < zeichenl:
-                table[ord(zeichen[a])][ord(zeichen[a + 1])] += 1
+                table[ord(zeichen[a])][ord(zeichen[a + 1])][ord(zeichen[a + 2])] += 1
                 count += 1
                 a += 1
     return table, count
 
 
 def save(data):
-    with open('ikeaname.json', 'w') as outfile:
-        json.dump(data, outfile)
+    with open('ikeaname.pickle', 'wb') as outfile:
+        pickle.dump(data, outfile,pickle.HIGHEST_PROTOCOL)
 
 
 def load():
-    with open('ikeaname.json') as inputfile:
-        table = json.load(inputfile)
+    with open('ikeaname.pickle',"rb") as inputfile:
+        table = pickle.load(inputfile)
     return table
 
 
-def letter(a):
+def letter(a, b):
     mylist = []
-    for b in range(221):
-        for x in range(table[a][b]):
-            mylist.append(b)
+    for c in range(221):
+        for x in range(table[a][b][c]):
+            mylist.append(c)
 
     return random.choice(mylist)
 
@@ -61,9 +63,9 @@ def image(table):
     img.save('image.png')
 
 
-if not os.path.isfile('ikeaname.json'):
+if os.path.isfile('ikeaname.pickle'):
     table, count = load()
-    image(table)
+    # image(table)
 
 else:
     table, count = gen()
@@ -71,14 +73,20 @@ else:
 
 
 def generate():
-    a = 32
+    a = b = 32
     wort = []
     while True:
-        a = letter(a)
-        wort.append(chr(a))
-        if a == 32:
+        new = letter(a, b)
+        wort.append(chr(new))
+        a = b
+        b = new
+        if a == 32 and b == 32:
             if len(wort) > 5:
-                return "".join(wort)
+                return "".join(wort).strip()
+            else:
+                wort = []
+                a = b = 32
+
 
 
 if __name__ == "__main__":
