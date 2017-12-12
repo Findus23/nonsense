@@ -56,6 +56,14 @@ body, html {
     height: 40px;
     display: block; }
 
+.github-corner svg {
+  fill: #ffcc00;
+  color: #003399;
+  position: absolute;
+  top: 0;
+  border: 0;
+  right: 0; }
+
 .github-corner:hover .octo-arm {
   animation: octocat-wave 560ms ease-in-out; }
 
