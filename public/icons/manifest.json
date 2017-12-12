@@ -1,5 +1,6 @@
 {
     "name": "nonsense",
+    "short_name":"nonsense",
     "icons": [
         {
             "src": "/icons/android-chrome-192x192.png",

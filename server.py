@@ -1,9 +1,9 @@
-from flask import Flask, jsonify, url_for, redirect, abort
+from flask import Flask, jsonify, abort, send_from_directory
 
 import generate
 import ikeagen
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='public/', static_url_path='/')
 
 
 @app.route('/api/description/<int:count>/')
@@ -17,14 +17,13 @@ def get_description(count):
             "name": ikeagen.generate()
         })
     response = jsonify(descriptions)
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
-@app.route("/")
-def redirect_to_correct_api():
-    return redirect(url_for("get_description", count=10))
-
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    @app.route('/<path:path>')
+    def send_js(path):
+        return send_from_directory('public', path)
+
+
+    app.run()
