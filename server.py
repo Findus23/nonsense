@@ -3,7 +3,7 @@ from flask import Flask, jsonify, abort, send_from_directory
 import generate
 import ikeagen
 
-app = Flask(__name__, static_folder='public/', static_url_path='/')
+app = Flask(__name__)
 
 
 @app.route('/api/description/<int:count>/')
