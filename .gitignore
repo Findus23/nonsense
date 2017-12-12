@@ -2,6 +2,7 @@
 tmp
 .idea/
 *.json
+!public/icons/manifest.json
 *.yaml
 *.pickle
 __pycache__/
