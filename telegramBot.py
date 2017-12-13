@@ -20,7 +20,7 @@ subscriptions = dict()
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+                    level=logging.DEBUG)
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,8 @@ def subscribe(bot, update, job_queue):
 
     job = job_queue.run_daily(subscribe_notification,
                               context=chat_id,
-                              time=datetime.datetime.now().replace(minute=0, hour=8, second=0))
+                              time=datetime.datetime.now().replace(minute=0, hour=8, second=0)
+                                   + datetime.timedelta(days=1))
     subscriptions[chat_id] = job
     update.message.reply_text('Successfully subscribed')
 
@@ -110,7 +111,8 @@ def startup(job_queue):
         save = yaml.load(json_file)
     for s in save["subscriptions"]:
         job = job_queue.run_daily(subscribe_notification, context=s,
-                                  time=datetime.datetime.now().replace(minute=0, hour=8, second=0))
+                                  time=datetime.datetime.now().replace(minute=0, hour=8, second=0)
+                                       + datetime.timedelta(days=1))
         subscriptions[s] = job
 
 
