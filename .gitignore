@@ -7,5 +7,3 @@ tmp
 *.pickle
 __pycache__/
 config.py
-!words.yaml
-!download.json

@@ -10,12 +10,12 @@ from PIL import Image
 
 def gen():
     table = [[[0 for i in range(221)] for j in range(221)] for k in range(221)]
-    # contents = open("ikeaname.txt").read().splitlines()
-    with open('download.json') as inputfile:
-        contents = json.load(inputfile)["names"]
+    with open('crawl.json') as inputfile:
+        crawldata = json.load(inputfile)
+    names = {result["name"] for result in crawldata}
     count = 0
-    for name in contents:
-        if name:
+    for name in names:
+        if name is not None and "„" not in name:
             name = "  " + name + "  "
             zeichen = list(name)
             zeichenl = len(zeichen)
