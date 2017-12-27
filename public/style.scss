@@ -23,6 +23,9 @@ body, html {
 }
 
 #buttonwrapper {
+  @media screen and (max-height: 400px) {
+    top: 10px;
+  }
   position: fixed;
   top: 50px;
   text-decoration: none;

@@ -22,6 +22,9 @@ body, html {
   text-decoration: none;
   display: flex;
   align-items: center; }
+  @media screen and (max-height: 400px) {
+    #buttonwrapper {
+      top: 10px; } }
   #buttonwrapper:hover {
     text-decoration: none; }
     #buttonwrapper:hover #icon {
