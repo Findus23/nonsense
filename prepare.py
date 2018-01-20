@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import json
 
 import re
 import yaml
 
-with open('crawl.json', "r") as inputfile:
-    crawldata = json.load(inputfile)
+import utils
+
+crawldata = utils.crawl_data()
 
 descriptions = {result["description"] for result in crawldata}
 print(len(descriptions))
@@ -24,11 +24,11 @@ for d in descriptions:
         suffix.update(re.findall("(-[\w.-]+)", d))
 
 words = {
-    "nouns": list(nouns),
-    "adj": list(adj),
-    "digit": list(digit),
-    "prefix": list(prefix),
-    "suffix": list(suffix)
+    "nouns": sorted(nouns),
+    "adj": sorted(adj),
+    "digit": sorted(digit),
+    "prefix": sorted(prefix),
+    "suffix": sorted(suffix)
 }
 with open('words.yaml', 'w') as outfile:
     yaml.dump(words, outfile, default_flow_style=False)

@@ -45,7 +45,7 @@ def subscribe(bot, update, job_queue):
     chat_id = update.message.chat_id
     # Add job to queue
     if chat_id in subscriptions:
-        update.message.reply_text('You are already subscribed')
+        update.message.reply_text('Du bist bereits angemeldet')
         return
 
     job = job_queue.run_daily(subscribe_notification,
@@ -53,7 +53,7 @@ def subscribe(bot, update, job_queue):
                               time=datetime.datetime.now().replace(minute=0, hour=8, second=0)
                                    + datetime.timedelta(days=1))
     subscriptions[chat_id] = job
-    update.message.reply_text('Successfully subscribed')
+    update.message.reply_text('erfolgreich angemeldet')
 
 
 def unsubscribe(bot, update):
@@ -61,14 +61,14 @@ def unsubscribe(bot, update):
     chat_id = update.message.chat_id
 
     if chat_id not in subscriptions:
-        update.message.reply_text('You have no subscription')
+        update.message.reply_text('Du nicht angemeldet')
         return
 
     # Add job to queue
     job = subscriptions[chat_id]
     job.schedule_removal()
     del subscriptions[chat_id]
-    update.message.reply_text('Successfully unsubscribed')
+    update.message.reply_text('erfolgreich abgemeldet')
 
 
 def multiple(bot, update, args):
@@ -83,7 +83,7 @@ def multiple(bot, update, args):
             descriptions.append("+++ " + generate.get_description() + " +++")
         update.message.reply_text("\n".join(descriptions))
     except (IndexError, ValueError):
-        update.message.reply_text('Usage: /multiple <count>')
+        update.message.reply_text('Verwendung: /mehrere <anzahl>')
 
 
 def error(bot, update, error):

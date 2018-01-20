@@ -1,17 +1,16 @@
 #!/usr/bin/python3
-import json
-
 import pickle
 
 import os
 import random
 from PIL import Image
 
+import utils
+
 
 def gen():
     table = [[[0 for i in range(221)] for j in range(221)] for k in range(221)]
-    with open('crawl.json') as inputfile:
-        crawldata = json.load(inputfile)
+    crawldata = utils.crawl_data()
     names = {result["name"] for result in crawldata}
     count = 0
     for name in names:
@@ -30,11 +29,11 @@ def gen():
 
 def save(data):
     with open('ikeaname.pickle', 'wb') as outfile:
-        pickle.dump(data, outfile,pickle.HIGHEST_PROTOCOL)
+        pickle.dump(data, outfile, pickle.HIGHEST_PROTOCOL)
 
 
 def load():
-    with open('ikeaname.pickle',"rb") as inputfile:
+    with open('ikeaname.pickle', "rb") as inputfile:
         table = pickle.load(inputfile)
     return table
 
@@ -86,7 +85,6 @@ def generate():
             else:
                 wort = []
                 a = b = 32
-
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ class NonsenseSpider(Spider):
     ]
     custom_settings = {
         'FEED_FORMAT': 'json',
-        'FEED_URI': "../crawl.json"
+        'FEED_URI': "../crawlData/crawl.json"
     }
 
     def parse(self, response):
