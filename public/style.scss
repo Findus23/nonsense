@@ -88,6 +88,19 @@ body, html {
   }
 }
 
+#more_information {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  svg {
+    fill: white;
+    width: 32px;
+    height: 32px;
+    display: block;
+  }
+}
+
 @keyframes octocat-wave {
   0%, 100% {
     transform: rotate(0)

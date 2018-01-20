@@ -70,6 +70,17 @@ body, html {
 .github-corner:hover .octo-arm {
   animation: octocat-wave 560ms ease-in-out; }
 
+#more_information {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px; }
+  #more_information svg {
+    fill: white;
+    width: 32px;
+    height: 32px;
+    display: block; }
+
 @keyframes octocat-wave {
   0%, 100% {
     transform: rotate(0); }
