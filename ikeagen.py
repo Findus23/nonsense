@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-import pickle
 
+import numpy as np
 import os
 import random
 from PIL import Image
@@ -9,7 +9,8 @@ import utils
 
 
 def gen():
-    table = [[[0 for i in range(221)] for j in range(221)] for k in range(221)]
+    n = 221
+    table = np.empty(shape=(n, n, n), dtype=np.int)
     crawldata = utils.crawl_data()
     names = {result["name"] for result in crawldata}
     count = 0
@@ -25,17 +26,6 @@ def gen():
                 count += 1
                 a += 1
     return table, count
-
-
-def save(data):
-    with open('ikeaname.pickle', 'wb') as outfile:
-        pickle.dump(data, outfile, pickle.HIGHEST_PROTOCOL)
-
-
-def load():
-    with open('ikeaname.pickle', "rb") as inputfile:
-        table = pickle.load(inputfile)
-    return table
 
 
 def letter(a, b):
@@ -62,13 +52,11 @@ def image(table):
     img.save('image.png')
 
 
-if os.path.isfile('ikeaname.pickle'):
-    table, count = load()
-    # image(table)
-
+if os.path.isfile('ikeaname.npy') and False:  # Loading uses twice the memory and is therefore disabled
+    table, count = np.load('ikeaname.npy')
 else:
     table, count = gen()
-    save((table, count))
+    np.save('ikeaname.npy', (table, count), )
 
 
 def generate():
