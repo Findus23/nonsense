@@ -1,28 +1,33 @@
 #!/usr/bin/python3
 
-import numpy as np
+import pickle
+import resource
+
 import os
 import random
-from PIL import Image
 
 import utils
 
 
 def gen():
-    n = 221
-    table = np.empty(shape=(n, n, n), dtype=np.int)
+    table = {}
     crawldata = utils.crawl_data()
     names = {result["name"] for result in crawldata}
     count = 0
     for name in names:
-        if name is not None and "„" not in name:
+        if name is not None:
             name = "  " + name + "  "
             zeichen = list(name)
             zeichenl = len(zeichen)
-            zeichenl -= 2
             a = 0
-            while a < zeichenl:
-                table[ord(zeichen[a])][ord(zeichen[a + 1])][ord(zeichen[a + 2])] += 1
+            while a < zeichenl - 2:
+                if (zeichen[a], zeichen[a + 1]) not in table:
+                    table[(zeichen[a], zeichen[a + 1])] = {}
+
+                if zeichen[a + 2] in table[(zeichen[a], zeichen[a + 1])]:
+                    table[(zeichen[a], zeichen[a + 1])][zeichen[a + 2]] += 1
+                else:
+                    table[(zeichen[a], zeichen[a + 1])][zeichen[a + 2]] = 1
                 count += 1
                 a += 1
     return table, count
@@ -30,51 +35,37 @@ def gen():
 
 def letter(a, b):
     mylist = []
-    for c in range(221):
-        for x in range(table[a][b][c]):
-            mylist.append(c)
-
+    for c in table[(a, b)]:
+        mylist.extend([c] * table[(a, b)][c])
     return random.choice(mylist)
 
 
-def image(table):
-    img = Image.new('RGB', (221, 221))
-    maximum = max(max(table))
-    print(maximum)
-    row = 0
-    col = 0
-    for coln in range(221):
-        for rown in range(221):
-            color = 255 - int(table[coln][rown] / maximum * 255)
-            img.putpixel((coln, rown), (color, color, color))
-
-    img = img.resize((2210, 2210), )
-    img.save('image.png')
-
-
-if os.path.isfile('ikeaname.npy') and False:  # Loading uses twice the memory and is therefore disabled
-    table, count = np.load('ikeaname.npy')
+if os.path.isfile('ikeaname.pickle') and False:  # Loading uses twice the memory and is therefore disabled
+    with open('ikeaname.pickle', 'rb') as handle:
+        b = pickle.load(handle)
 else:
     table, count = gen()
-    np.save('ikeaname.npy', (table, count), )
+    with open('ikeaname.pickle', 'wb') as handle:
+        pickle.dump((table, count), handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def generate():
-    a = b = 32
+    a = b = " "
     wort = []
     while True:
         new = letter(a, b)
-        wort.append(chr(new))
+        wort.append(new)
         a = b
         b = new
-        if a == 32 and b == 32:
+        if a == " " and b == " ":
             if len(wort) > 5:
                 return "".join(wort).strip()
             else:
                 wort = []
-                a = b = 32
+                a = b = " "
 
 
 if __name__ == "__main__":
     for _ in range(100):
         print(generate())
+    print("used {mb}MB".format(mb=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024))

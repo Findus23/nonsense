@@ -1,4 +1,3 @@
-numpy
 asn1crypto==0.24.0
 attrs==17.4.0
 Automat==0.6.0
@@ -17,11 +16,13 @@ idna==2.6
 incremental==17.5.0
 itsdangerous==0.24
 Jinja2==2.10
-lxml==4.1.1
+lxml==4.2.1
 MarkupSafe==1.0
+memory-profiler==0.51.0
 olefile==0.44
 parsel==1.3.1
 Pillow==5.0.0
+psutil==5.4.3
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
 pycparser==2.18
