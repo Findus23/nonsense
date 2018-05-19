@@ -1,0 +1,40 @@
+\documentclass[14pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\author{Lukas Winkler}
+\begin{document}
+\section{Ikea-Artikel}
+\begin{table}{cc}
+SLUMRA & Spülschüssel belüfteter \\
+MÅLA & Martiniglas mit Befestigungsseil grober \\
+TÅSTRUP & 2er-Hängeleuchte \\
+KLIMPEN & Hähnchenpfanne gewebt \\
+SONGE & Kiste 24-tlg. mit Eckkleiderschrank \\
+KULÖRT & Regal \\
+ALVINE & Pfannkuchen mit Karlstad geräuchert \\
+TYDLIG & Handpuppe mit Serie.. links vol. \\
+HÖNSBÄR & Zwiebel \\
+FÖREBILD & 2er-Set \\
+MELLTORP NISSE & Knoblauchsoße der \\
+DIREKT & Abflussstop veget. sitz mit Boden \\
+BARMHÄRTIG & Pinnwand gewebt \\
+DORTHY & Deckpl. mit Pizzastück \\
+RUNDLIG & Eisportionierer wasserdicht \\
+ENIGT & -Bank \\
+VÄNNERNA & Schubladenelement \\
+STRANDMON & Flur \\
+POTATIS & Hängemattengestell mit Tieren \\
+HALOGEN & Lasur \\
+LERHAMN & Abfalleimer \\
+OST PRÄST & Stunden 3-teilig \\
+DOMSJÖ & Barhockerbezug \\
+BEFINTLIG & Soßenkanne mit Abschirmung \\
+LUDDHAVRE & Eckschreibtisch klein weiß \\
+INDIRA & Barhockerbezug weich warm \\
+POLARVIDE & Müsli mit Siphon \\
+VÄSMAN & Serie \\
+KORNUM & Stange \\
+LEIRVIK & Förmchen mit Faltjalousie gepresst \\
+\end{table}
+\end{document}

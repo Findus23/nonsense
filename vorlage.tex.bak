@@ -1,0 +1,11 @@
+\documentclass[14pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\author{Lukas Winkler}
+\begin{document}
+\chapter{Ikea-Artikel}
+\begin{itemize}
+XXXXX
+\end{itemize}
+\end{document}
