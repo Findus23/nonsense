@@ -3,7 +3,7 @@ import yaml
 import random
 
 with open('words.yaml') as data_file:
-    data = yaml.load(data_file)
+    data = yaml.safe_load(data_file)
 
 
 def get_noun():

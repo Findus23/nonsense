@@ -108,7 +108,7 @@ def inlinequery(bot, update):
 
 def startup(job_queue):
     with open("save.yaml") as json_file:
-        save = yaml.load(json_file)
+        save = yaml.safe_load(json_file)
     for s in save["subscriptions"]:
         job = job_queue.run_daily(subscribe_notification, context=s,
                                   time=datetime.datetime.now().replace(minute=0, hour=8, second=0)
