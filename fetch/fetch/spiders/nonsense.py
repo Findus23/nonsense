@@ -8,9 +8,7 @@ logger = logging.getLogger(__name__)
 class NonsenseSpider(Spider):
     name = "nonsense"
     start_urls = [
-        "http://www.ikea.com/at/de/catalog/allproducts/",
-        "http://www.ikea.com/at/de/catalog/allproducts/department/",
-        "http://www.ikea.com/at/de/catalog/allproducts/alphabetical/"
+        "https://www.ikea.com/at/de/cat/produkte-functional/",
     ]
     custom_settings = {
         'FEED_FORMAT': 'json',
@@ -18,15 +16,13 @@ class NonsenseSpider(Spider):
     }
 
     def parse(self, response):
-        for url in response.css(".productCategoryContainerWrapper a::attr(href)"):
-            if url is not None:
-                yield response.follow(url, callback=self.parse_product_list)
-        pass
-
-    def parse_product_list(self, response):
-        products = response.css(".productDetails")
+        products = response.css(".product-compact")
         for product in products:
+            description = product.css(".product-compact__type::text").extract_first().strip().strip(",")
             yield {
-                'name': product.css(".productTitle::text").extract_first(),
-                'description': product.css(".productDesp::text").extract_first(),
+                'name': product.css(".product-compact__name::text").extract_first(),
+                'description': description,
             }
+        for url in response.css("a.catalog-list__link::attr(href)"):
+            if url is not None:
+                yield response.follow(url, callback=self.parse)
