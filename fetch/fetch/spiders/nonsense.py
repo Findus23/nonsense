@@ -16,8 +16,7 @@ class NonsenseSpider(Spider):
     }
 
     def parse(self, response):
-        products = response.css("."
-                                "")
+        products = response.css(".product-compact")
         for product in products:
             name = product.css(".product-compact__name::text").extract_first()
             description = product.css(".product-compact__type::text").extract_first().strip().strip(",")
