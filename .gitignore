@@ -2,9 +2,11 @@
 tmp
 .idea/
 *.json
+*.jsonl
 !public/icons/manifest.json
 *.yaml
 *.pickle
 *.npy
 __pycache__/
 config.py
+crawlData/
