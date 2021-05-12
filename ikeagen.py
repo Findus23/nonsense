@@ -40,12 +40,12 @@ def letter(a, b):
     return random.choice(mylist)
 
 
-if os.path.isfile('ikeaname.pickle') and False:  # Loading uses twice the memory and is therefore disabled
-    with open('ikeaname.pickle', 'rb') as handle:
+if os.path.isfile('runtime/ikeaname.pickle') and False:  # Loading uses twice the memory and is therefore disabled
+    with open('runtime/ikeaname.pickle', 'rb') as handle:
         b = pickle.load(handle)
 else:
     table, count = gen()
-    with open('ikeaname.pickle', 'wb') as handle:
+    with open('runtime/ikeaname.pickle', 'wb') as handle:
         pickle.dump((table, count), handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
