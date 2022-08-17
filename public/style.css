@@ -3,61 +3,76 @@ body, html {
   margin: 0;
   background: #003399;
   height: 100%;
-  font-family: "Verdana", "Liberation Sans", sans-serif; }
+  font-family: "Noto Sans", "Liberation Sans", "Verdana", sans-serif;
+}
 
 #contentbox {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100%; }
+  height: 100%;
+}
 
 #box {
   background: #ffcc00;
-  padding: 16px; }
+  padding: 16px;
+}
 
 #buttonwrapper {
   position: fixed;
   top: 50px;
   text-decoration: none;
   display: flex;
-  align-items: center; }
-  @media screen and (max-height: 400px) {
-    #buttonwrapper {
-      top: 10px; } }
-  #buttonwrapper:hover {
-    text-decoration: none; }
-    #buttonwrapper:hover #icon {
-      transform: rotate(90deg); }
+  align-items: center;
+}
+@media screen and (max-height: 400px) {
+  #buttonwrapper {
+    top: 10px;
+  }
+}
+#buttonwrapper:hover {
+  text-decoration: none;
+}
+#buttonwrapper:hover #icon {
+  transform: rotate(90deg);
+}
 
 #icon {
   width: 70px;
   height: 70px;
-  transition: transform .3s;
-  margin-right: 10px; }
+  transition: transform 0.3s;
+  margin-right: 10px;
+}
 
 #button {
   color: white;
-  text-transform: uppercase; }
+  /*text-transform: uppercase;*/
+  font-weight: bold;
+}
 
 #name {
   font-size: 2.25rem;
   text-align: center;
-  margin-bottom: 16px; }
+  margin-bottom: 16px;
+}
 
 #description {
-  font-size: 1.2rem; }
+  font-size: 1.2rem;
+}
 
 #share {
   position: absolute;
   bottom: 0;
   right: 0;
-  padding: 10px; }
-  #share svg {
-    fill: white;
-    width: 40px;
-    height: 40px;
-    display: block; }
+  padding: 10px;
+}
+#share svg {
+  fill: white;
+  width: 40px;
+  height: 40px;
+  display: block;
+}
 
 .github-corner svg {
   fill: #ffcc00;
@@ -65,32 +80,43 @@ body, html {
   position: absolute;
   top: 0;
   border: 0;
-  right: 0; }
-
+  right: 0;
+}
 .github-corner:hover .octo-arm {
-  animation: octocat-wave 560ms ease-in-out; }
+  animation: octocat-wave 560ms ease-in-out;
+}
 
 #more_information {
   position: absolute;
   bottom: 0;
   right: 0;
-  padding: 10px; }
-  #more_information svg {
-    fill: white;
-    width: 32px;
-    height: 32px;
-    display: block; }
+  padding: 10px;
+}
+#more_information svg {
+  fill: white;
+  width: 32px;
+  height: 32px;
+  display: block;
+}
 
 @keyframes octocat-wave {
   0%, 100% {
-    transform: rotate(0); }
+    transform: rotate(0);
+  }
   20%, 60% {
-    transform: rotate(-25deg); }
+    transform: rotate(-25deg);
+  }
   40%, 80% {
-    transform: rotate(10deg); } }
-
+    transform: rotate(10deg);
+  }
+}
 @media (max-width: 500px) {
   .github-corner:hover .octo-arm {
-    animation: none; }
+    animation: none;
+  }
   .github-corner .octo-arm {
-    animation: octocat-wave 560ms ease-in-out; } }
+    animation: octocat-wave 560ms ease-in-out;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

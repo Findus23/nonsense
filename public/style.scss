@@ -6,7 +6,7 @@ body, html {
   margin: 0;
   background: $famousBlue;
   height: 100%;
-  font-family: "Verdana", "Liberation Sans", sans-serif;
+  font-family: "Noto Sans", "Liberation Sans", "Verdana", sans-serif;
 }
 
 #contentbox {
@@ -49,6 +49,7 @@ body, html {
 #button {
   color: white;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 #name {
