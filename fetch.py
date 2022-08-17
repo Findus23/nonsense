@@ -9,7 +9,7 @@ products_url = "https://shop.api.ingka.ikea.com/range/v1/at/de/category-details?
 
 class OutputWriter:
     def __init__(self):
-        self.file = open("crawlData/crawl.jsonl", "w")
+        self.file = open("crawlData/20220817.jsonl", "w")
 
     def log(self, name: str, description: str):
         print(name, description)
@@ -31,10 +31,12 @@ categories = set()
 data = r.json()["categories"]
 
 for category in data:
+    print(category["categoryId"])
     categories.add(category["categoryId"])
+    if "subcategories" not in category:
+        continue
     for subcategory in category["subcategories"]:
         categories.add(subcategory["categoryId"])
-print(categories)
 
 for category in categories:
     print(category)
