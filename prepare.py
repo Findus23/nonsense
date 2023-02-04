@@ -3,7 +3,7 @@
 import re
 from typing import Set
 
-import yaml
+import tomli_w
 
 import utils
 
@@ -54,5 +54,5 @@ words = {
     "prefix": sorted(postprocess(prefix)),
     "suffix": sorted(postprocess(suffix))
 }
-with open('words.yaml', 'w') as outfile:
-    yaml.dump(words, outfile, default_flow_style=False, allow_unicode=True)
+with open('words.toml', 'wb') as outfile:
+    tomli_w.dump(words, outfile)

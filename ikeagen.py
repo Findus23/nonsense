@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-import pickle
-import resource
-
 import os
+import pickle
 import random
+import resource
+from pathlib import Path
 
 import utils
 
@@ -40,13 +40,17 @@ def letter(a, b):
     return random.choice(mylist)
 
 
-if os.path.isfile('runtime/ikeaname.pickle') and False:  # Loading uses twice the memory and is therefore disabled
-    with open('runtime/ikeaname.pickle', 'rb') as handle:
+use_saving = False  # Loading uses twice the memory and is therefore disabled
+save_file=Path('runtime/ikeaname.pickle')
+
+if save_file.exists() and use_saving:
+    with save_file.open("rb") as handle:
         b = pickle.load(handle)
 else:
     table, count = gen()
-    with open('runtime/ikeaname.pickle', 'wb') as handle:
-        pickle.dump((table, count), handle, protocol=pickle.HIGHEST_PROTOCOL)
+    if use_saving:
+        with save_file.open("wb") as handle:
+            pickle.dump((table, count), handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def generate():

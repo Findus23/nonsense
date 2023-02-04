@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-import yaml
 import random
 
-with open('words.yaml') as data_file:
-    data = yaml.safe_load(data_file)
+import tomli
+
+with open('words.toml',"rb") as data_file:
+    data = tomli.load(data_file)
 
 
 def get_noun():

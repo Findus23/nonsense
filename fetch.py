@@ -9,7 +9,7 @@ products_url = "https://shop.api.ingka.ikea.com/range/v1/at/de/category-details?
 
 class OutputWriter:
     def __init__(self):
-        self.file = open("crawlData/20220817.jsonl", "w")
+        self.file = open("crawlData/out.jsonl", "w")
 
     def log(self, name: str, description: str):
         print(name, description)

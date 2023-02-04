@@ -5,6 +5,7 @@ tmp
 *.jsonl
 !public/icons/manifest.json
 *.yaml
+*.toml
 *.pickle
 *.npy
 __pycache__/
