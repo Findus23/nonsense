@@ -19,17 +19,17 @@ body, html {
   padding: 16px;
 }
 
+@media screen and (max-height: 400px) {
+  #buttonwrapper {
+    top: 10px;
+  }
+}
 #buttonwrapper {
   position: fixed;
   top: 50px;
   text-decoration: none;
   display: flex;
   align-items: center;
-}
-@media screen and (max-height: 400px) {
-  #buttonwrapper {
-    top: 10px;
-  }
 }
 #buttonwrapper:hover {
   text-decoration: none;
@@ -47,7 +47,7 @@ body, html {
 
 #button {
   color: white;
-  /*text-transform: uppercase;*/
+  text-transform: uppercase;
   font-weight: bold;
 }
 
